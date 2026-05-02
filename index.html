@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description"
+    content="Comprehensive Low Level Design knowledge base — Design patterns, System Design, MySQL exercises, and Java implementations.">
+  <meta name="theme-color" content="#0d1117">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Tech Learning Docs</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Prism.js — Syntax Highlighting (Tomorrow Night theme) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+
+  <!-- Favicon -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+</head>
+
+<body>
+  <div class="app">
+    <!-- Sidebar Overlay (mobile) -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo" onclick="window.location.hash=''; showWelcome();">
+          <div class="sidebar-logo-icon">T</div>
+          <div>
+            <div class="sidebar-logo-text">Tech Learning Docs</div>
+            <div class="sidebar-logo-subtitle">Design • Code • Learn</div>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar-search">
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" id="search-input" placeholder="Search docs..." autocomplete="off">
+        </div>
+      </div>
+      <nav class="sidebar-nav" id="sidebar-nav"></nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Header -->
+      <header class="header">
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle sidebar">☰</button>
+        <div class="breadcrumb">
+          <span id="breadcrumb-section"></span>
+          <span class="breadcrumb-sep" id="breadcrumb-sep">›</span>
+          <span class="breadcrumb-current" id="breadcrumb-current">Home</span>
+        </div>
+        <div class="header-actions">
+          <a class="header-btn" href="https://github.com" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="content-wrapper">
+        <div class="content">
+          <div id="content-area">
+            <!-- Content loaded here -->
+          </div>
+        </div>
+
+        <!-- Table of Contents -->
+        <aside class="toc" id="toc">
+          <div class="toc-title">On this page</div>
+          <ul class="toc-list" id="toc-list"></ul>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scroll to top -->
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+  <!-- Scripts -->
+  <!-- markdown-it -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/13.0.2/markdown-it.min.js"></script>
+
+  <!-- Prism.js core + languages -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-lua.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+  <!-- Mermaid.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+
+  <!-- Content + App -->
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
