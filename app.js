@@ -20,13 +20,35 @@ const NAV_STRUCTURE = [
         ]
     },
     {
-        title: 'System Design',
+        title: 'System Design (LLD)',
         icon: '⚙️',
         items: [
             { key: 'docs/FileSystem.md', label: 'In-Memory File System', icon: '📂' },
             { key: 'docs/LRUCache.md', label: 'LRU Cache', icon: '📂' },
             { key: 'docs/ParkingLot.md', label: 'Parking Lot', icon: '📂' },
             { key: 'docs/Redis.md', label: 'Redis', icon: '📂' },
+        ]
+    },
+    {
+        title: 'High Level Design (HLD)',
+        icon: '🏛️',
+        items: [
+            { key: 'HLD/01_URL_Shortener.md', label: 'URL Shortener', icon: '📄' },
+            { key: 'HLD/02_Pastebin.md', label: 'Pastebin', icon: '📄' },
+            { key: 'HLD/03_Authentication_Authorization.md', label: 'Authentication & Authorization', icon: '📄' },
+            { key: 'HLD/04_Instagram_Feed.md', label: 'Instagram Feed', icon: '📄' },
+            { key: 'HLD/04_Spotify.md', label: 'Spotify', icon: '📄' },
+        ]
+    },
+    {
+        title: 'Core Concepts',
+        icon: '🧠',
+        items: [
+            { key: 'docs/Kafka.md', label: 'Kafka', icon: '📄' },
+            { key: 'docs/Multithreading.md', label: 'Multithreading', icon: '📄' },
+            { key: 'docs/Spotify.md', label: 'Spotify Deep Dive', icon: '📄' },
+            { key: 'docs/SpringBoot_Architecture.md', label: 'Spring Boot Architecture', icon: '📄' },
+            { key: 'docs/SpringBoot_Architecture_Hinglish.md', label: 'Spring Boot (Hinglish)', icon: '📄' },
         ]
     },
     {
@@ -38,9 +60,20 @@ const NAV_STRUCTURE = [
             { key: 'MySQL/01-Solutions.md', label: '01 — Solutions', icon: '✅' },
             { key: 'MySQL/02-CRUDOperations.md', label: '02 — CRUD Operations', icon: '📝' },
             { key: 'MySQL/03-FilteringSortingAggregation.md', label: '03 — Filtering & Aggregation', icon: '📝' },
+            { key: 'MySQL/04-JoinsDeepDive.md', label: '04 — Joins Deep Dive', icon: '📝' },
+            { key: 'MySQL/05-SubqueriesAndCTEs.md', label: '05 — Subqueries & CTEs', icon: '📝' },
+            { key: 'MySQL/06-SetOperations.md', label: '06 — Set Operations', icon: '📝' },
         ]
-    }
+    },
+    {
+        title: 'DSA',
+        icon: '🔢',
+        items: [
+            { key: 'DSA/BinarySearch/01_intersection_of_two_arrays.md', label: 'Binary Search — Intersection of Two Arrays', icon: '📄' },
+        ]
+    },
 ];
+
 
 // Group Java source files by package
 function buildJavaNav() {
@@ -74,6 +107,23 @@ function buildJavaNav() {
                 if (part === "filesystem") title = "File System";
                 if (part === "lrucache") title = "LRU Cache";
                 if (part === "parkinglot") title = "Parking Lot";
+                if (part === "hld") title = "HLD";
+                if (part === "kafka") title = "Kafka";
+                if (part === "multithreading") title = "Multithreading";
+                if (part === "pastebin") title = "Pastebin";
+                if (part === "spotify") title = "Spotify";
+                if (part === "urlshortener") title = "URL Shortener";
+                if (part === "admin") title = "Admin";
+                if (part === "consumer") title = "Consumer";
+                if (part === "producer") title = "Producer";
+                if (part === "streams") title = "Streams";
+                if (part === "transactions") title = "Transactions";
+                if (part === "security") title = "Security";
+                if (part === "patterns") title = "Patterns";
+                if (part === "model") title = "Model";
+                if (part === "service") title = "Service";
+                if (part === "repository") title = "Repository";
+                if (part === "exception") title = "Exception";
 
                 let folder = currentLevel.find(item => item.label === title && item.items);
                 if (!folder) {
@@ -329,11 +379,21 @@ function showWelcome() {
     const javaCount = Object.keys(SITE_CONTENT).filter(k => k.endsWith('.java')).length;
     const patternCount = NAV_STRUCTURE[0].items.length;
 
+    // Find the Java section (dynamically added last)
+    const javaSection = NAV_STRUCTURE.find(s => s.title === 'Java Code');
+    const firstJavaKey = javaSection ? (function findFirstFile(items) {
+        for (const item of items) {
+            if (item.key) return item.key;
+            if (item.items) { const r = findFirstFile(item.items); if (r) return r; }
+        }
+        return '';
+    })(javaSection.items) : '';
+
     contentEl.innerHTML = `
     <div class="welcome">
       <span class="welcome-icon">🧠</span>
       <h1>Tech Learning Docs</h1>
-      <p>A comprehensive collection of design patterns, system design documents, MySQL exercises, and Java implementations.</p>
+      <p>A comprehensive collection of design patterns, HLD/LLD system design, MySQL, Kafka, Multithreading, Spring Boot, and Java implementations.</p>
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-number">${patternCount}</div>
@@ -356,15 +416,25 @@ function showWelcome() {
         </div>
         <div class="category-card" onclick="navigateTo('${NAV_STRUCTURE[1].items[0].key}')">
           <span class="cat-icon">⚙️</span>
-          <div class="cat-title">System Design</div>
+          <div class="cat-title">LLD System Design</div>
           <div class="cat-count">${NAV_STRUCTURE[1].items.length} problems</div>
         </div>
         <div class="category-card" onclick="navigateTo('${NAV_STRUCTURE[2].items[0].key}')">
+          <span class="cat-icon">🏛️</span>
+          <div class="cat-title">HLD System Design</div>
+          <div class="cat-count">${NAV_STRUCTURE[2].items.length} problems</div>
+        </div>
+        <div class="category-card" onclick="navigateTo('${NAV_STRUCTURE[3].items[0].key}')">
+          <span class="cat-icon">🧠</span>
+          <div class="cat-title">Core Concepts</div>
+          <div class="cat-count">${NAV_STRUCTURE[3].items.length} topics</div>
+        </div>
+        <div class="category-card" onclick="navigateTo('${NAV_STRUCTURE[4].items[0].key}')">
           <span class="cat-icon">🐬</span>
           <div class="cat-title">MySQL</div>
-          <div class="cat-count">${NAV_STRUCTURE[2].items.length} exercises</div>
+          <div class="cat-count">${NAV_STRUCTURE[4].items.length} lessons</div>
         </div>
-        <div class="category-card" onclick="navigateTo('${javaCount > 0 ? NAV_STRUCTURE[3].items[0].key : ''}')">
+        <div class="category-card" onclick="navigateTo('${firstJavaKey}')">
           <span class="cat-icon">☕</span>
           <div class="cat-title">Java Source</div>
           <div class="cat-count">${javaCount} files</div>
@@ -372,6 +442,7 @@ function showWelcome() {
       </div>
     </div>
   `;
+
 
     // Clear TOC
     const toc = document.getElementById('toc-list');

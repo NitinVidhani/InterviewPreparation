@@ -362,9 +362,96 @@ WHERE hire_date >= DATE_SUB(CURDATE(), INTERVAL 90 DAY);
 
 ---
 
-## 🏋️ Exercise Tasks
+## 🗄️ Dataset Setup
 
-Use your populated `company_db` from Exercise 2.
+Run this script to create and seed the dataset for this exercise. It's safe to re-run.
+
+> If you already ran the setup from Exercise 2, you can skip straight to the tasks — the same `company_db` dataset is used.
+
+```sql
+-- ─── 0. Create & switch database ─────────────────────────────────────────────
+CREATE DATABASE IF NOT EXISTS company_db
+  CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+USE company_db;
+
+-- ─── 1. Tables ────────────────────────────────────────────────────────────────
+DROP TABLE IF EXISTS employees;
+DROP TABLE IF EXISTS departments;
+
+CREATE TABLE departments (
+    department_id INT UNSIGNED AUTO_INCREMENT,
+    name          VARCHAR(100) NOT NULL,
+    location      VARCHAR(100) NOT NULL DEFAULT 'HQ',
+    budget        DECIMAL(12,2),
+    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (department_id),
+    UNIQUE KEY uq_dept_name (name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE employees (
+    employee_id   INT UNSIGNED AUTO_INCREMENT,
+    first_name    VARCHAR(50)  NOT NULL,
+    last_name     VARCHAR(50)  NOT NULL,
+    email         VARCHAR(255) NOT NULL,
+    phone         VARCHAR(20),
+    hire_date     DATE         NOT NULL,
+    salary        DECIMAL(10,2),
+    department_id INT UNSIGNED,
+    is_active     BOOLEAN      DEFAULT TRUE,
+    created_at    TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    updated_at    TIMESTAMP    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (employee_id),
+    UNIQUE KEY uq_email (email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ─── 2. Seed departments ──────────────────────────────────────────────────────
+INSERT INTO departments (name, location, budget) VALUES
+    ('Engineering', 'Bangalore', 5000000.00),
+    ('Marketing',   'Mumbai',    2000000.00),
+    ('Finance',     'Delhi',     3000000.00),
+    ('HR',          'HQ',        1500000.00),
+    ('Product',     'Bangalore', 4000000.00);
+
+-- ─── 3. Seed employees (15 rows) ─────────────────────────────────────────────
+INSERT INTO employees (first_name, last_name, email, phone, hire_date, salary, department_id, is_active) VALUES
+-- Engineering (dept 1) — 4 employees
+('Arjun',   'Sharma',   'arjun.sharma@gmail.com',   '9876543210', '2021-03-15', 180000.00, 1, TRUE),
+('Priya',   'Nair',     'priya.nair@company.com',   '9876543211', '2022-07-01', 145000.00, 1, TRUE),
+('Rahul',   'Verma',    'rahul.verma@gmail.com',    NULL,         '2023-01-10', 95000.00,  1, TRUE),
+('Sneha',   'Iyer',     'sneha.iyer@company.com',   '9876543213', '2020-05-20', 200000.00, 1, FALSE),
+-- Marketing (dept 2) — 3 employees
+('Karan',   'Mehta',    'karan.mehta@gmail.com',    '9876543214', '2023-06-01', 85000.00,  2, TRUE),
+('Divya',   'Pillai',   'divya.pillai@company.com', '9876543215', '2024-02-14', 75000.00,  2, TRUE),
+('Nikhil',  'Gupta',    'nikhil.gupta@gmail.com',   NULL,         '2024-08-01', 65000.00,  2, TRUE),
+-- Finance (dept 3) — 2 employees
+('Pooja',   'Reddy',    'pooja.reddy@company.com',  '9876543217', '2022-11-01', 110000.00, 3, TRUE),
+('Aditya',  'Kumar',    'aditya.kumar@gmail.com',   '9876543218', '2021-09-15', 125000.00, 3, TRUE),
+-- HR (dept 4) — 2 employees
+('Meena',   'Krishnan', 'meena.k@company.com',      '9876543219', '2023-03-01', 70000.00,  4, TRUE),
+('Suresh',  'Bhat',     'suresh.bhat@gmail.com',    NULL,         '2019-12-01', 55000.00,  4, FALSE),
+-- Product (dept 5) — 3 employees
+('Lakshmi', 'Venkat',   'lakshmi.v@company.com',    '9876543221', '2022-04-01', 155000.00, 5, TRUE),
+('Rohit',   'Joshi',    'rohit.joshi@gmail.com',    '9876543222', '2023-10-01', 120000.00, 5, TRUE),
+('Anjali',  'Singh',    'anjali.singh@company.com', '9876543223', '2024-05-15', 90000.00,  5, TRUE),
+-- No department (NULL dept) — 1 employee
+('Vikram',  'Das',       'vikram.das@gmail.com',    NULL,         '2025-01-10', 45000.00,  NULL, TRUE);
+```
+
+**Quick reference — dataset overview for writing your queries:**
+
+| Department | dept_id | Headcount | Salary Range | Active |
+|-----------|---------|-----------|-------------|--------|
+| Engineering | 1 | 4 | 95K – 200K | 3 active, 1 inactive |
+| Marketing | 2 | 3 | 65K – 85K | 3 active |
+| Finance | 3 | 2 | 110K – 125K | 2 active |
+| HR | 4 | 2 | 55K – 70K | 1 active, 1 inactive |
+| Product | 5 | 3 | 90K – 155K | 3 active |
+| (No dept) | NULL | 1 | 45K | 1 active |
+
+---
+
+## 🏋️ Exercise Tasks
 
 ### Task 1: Basic Aggregation
 Write queries to find:
