@@ -38,6 +38,7 @@ const NAV_STRUCTURE = [
             { key: 'HLD/03_Authentication_Authorization.md', label: 'Authentication & Authorization', icon: '📄' },
             { key: 'HLD/04_Instagram_Feed.md', label: 'Instagram Feed', icon: '📄' },
             { key: 'HLD/04_Spotify.md', label: 'Spotify', icon: '📄' },
+            { key: 'HLD/05_Rate_Limiter.md', label: 'Rate Limiter', icon: '📄' },
         ]
     },
     {
